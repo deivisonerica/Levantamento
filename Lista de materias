@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Levantamento ISPS</title>
+    <title>Levantamento ISPS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-900 min-h-screen p-2 md:p-6 text-slate-800">
+<body class="bg-slate-100 min-h-screen p-2 md:p-6 text-slate-800 font-sans">
 
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-700">
-        <div class="bg-slate-800 p-6 border-b-4 border-blue-500">
-            <h1 class="text-white text-xl font-black uppercase tracking-widest flex items-center gap-3">
-                <i class="fas fa-hard-hat text-blue-400"></i>
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+        <div class="bg-slate-800 p-6 border-b-4 border-blue-600 text-center md:text-left">
+            <h1 class="text-white text-xl font-black uppercase tracking-widest flex items-center justify-center md:justify-start gap-3">
+                <i class="fas fa-tools text-blue-400"></i>
                 Levantamento de Materiais
             </h1>
-            <p class="text-slate-400 text-xs mt-1 font-bold uppercase">Controle de Acesso - ISPS 2026</p>
+            <p class="text-slate-400 text-[10px] mt-1 font-bold">ISPS CONTROLE DE ACESSO - 2026</p>
         </div>
 
         <div class="p-4 md:p-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Responsável</label>
-                    <select id="responsavel" class="w-full border-slate-300 rounded-lg p-3 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700">
-                        <option value="">Selecione o condutor...</option>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase mb-1">Responsável</label>
+                    <select id="responsavel" class="w-full border-2 border-white rounded-lg p-3 bg-white shadow-sm font-bold outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Selecione...</option>
                         <option value="Adriano Nascimento">Adriano Nascimento</option>
                         <option value="Deivison Aleidson">Deivison Aleidson</option>
                         <option value="Deivison Barros">Deivison Barros</option>
@@ -31,38 +31,115 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Local da Obra</label>
-                    <input type="text" id="local" placeholder="Ex: Píer / Castelo D'água" class="w-full border-slate-300 rounded-lg p-3 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold">
+                    <label class="block text-[10px] font-black text-slate-500 uppercase mb-1">Local da Obra</label>
+                    <input type="text" id="local" placeholder="Ex: Píer, Castelo D'água..." class="w-full border-2 border-white rounded-lg p-3 bg-white shadow-sm font-bold outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
 
-            <div id="lista-container" class="space-y-4">
+            <div id="lista-container" class="space-y-3">
                 </div>
 
-            <div class="mt-10 flex flex-wrap gap-4 border-t border-slate-100 pt-8">
-                <button onclick="addLinha()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg">
-                    <i class="fas fa-plus-circle text-blue-400 text-lg"></i> ADICIONAR ITEM
+            <div class="mt-8 flex flex-col md:flex-row gap-4 border-t pt-6">
+                <button onclick="addLinha()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-black py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95">
+                    <i class="fas fa-plus-circle text-blue-400"></i> NOVO ITEM
                 </button>
-
-                <button onclick="gerarRelatorio()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg">
-                    <i class="fab fa-whatsapp text-lg"></i> ENVIAR WHATSAPP
+                <button onclick="enviarZap()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-black py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95">
+                    <i class="fab fa-whatsapp text-xl"></i> ENVIAR LEVANTAMENTO
                 </button>
             </div>
         </div>
     </div>
 
-    <datalist id="materiais-list">
-        <option value="Eletroduto Galvanizado a fogo Ø1\" NBR 5598">
-        <option value="Curva 90° Galvanizado a fogo Ø1\"">
+    <datalist id="materiais-db">
+        <option value="Eletroduto Galvanizado a fogo Ø1\"">
         <option value="Cabo de fibra óptica DDR, SM, 12FO">
         <option value="Conversor de Mídia 10/100/1000 - SM - SC">
-        <option value="Painel elétrico IP65 com placa de montagem">
-        <option value="Eletroduto flexível (Sealtubo) Ø1\"">
-        <option value="Disjuntor 10A - Termomagnético-Bifásico">
+        <option value="Painel elétrico IP65">
+        <option value="Disjuntor 10A Termomagnético">
         <option value="Cabo elétrico PP 3x6mm">
-        <option value="Cabo elétrico PP 3x2,5mm">
+        <option value="Curva 90° Galvanizado a fogo Ø1\"">
         <option value="Conector RJ45 Macho CAT6">
-        <option value="Régua de tomada 3 saídas 2P+T 10A">
-        <option value="DPS 20kA 275VCA">
+        <option value="Patch cord 1,5M CAT6">
         <option value="Abraçadeira Nylon 200mm">
-        </datal
+        <option value="DPS 20kA 275VCA">
+    </datalist>
+
+    <script>
+        // Mapeamento de Unidades para preenchimento automático
+        const umMap = {
+            "Eletroduto": "Metro",
+            "Cabo": "Metro",
+            "Abraçadeira velcro": "Metro",
+            "Vergalhão": "Metro",
+            "Canaleta": "Metro"
+        };
+
+        function addLinha() {
+            const id = Date.now();
+            const container = document.getElementById('lista-container');
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = "grid grid-cols-12 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-sm items-end animate-in fade-in zoom-in duration-200";
+            
+            div.innerHTML = `
+                <div class="col-span-12 md:col-span-7">
+                    <label class="block text-[9px] font-black text-slate-400 uppercase mb-1">Material</label>
+                    <input type="text" list="materiais-db" oninput="autoUM(this, '${id}')" class="w-full p-3 rounded-lg border-2 border-white bg-white shadow-inner text-sm font-bold outline-none focus:border-blue-400 mat-in" placeholder="Buscar...">
+                </div>
+                <div class="col-span-5 md:col-span-2">
+                    <label class="block text-[9px] font-black text-slate-400 uppercase mb-1 text-center">U.M</label>
+                    <input type="text" id="um-${id}" readonly class="w-full p-3 bg-transparent text-center font-black text-blue-600 text-xs" value="Un">
+                </div>
+                <div class="col-span-5 md:col-span-2">
+                    <label class="block text-[9px] font-black text-slate-400 uppercase mb-1 text-center">Qtd.</label>
+                    <input type="number" class="w-full p-3 rounded-lg border-2 border-white bg-white text-center font-black text-sm outline-none focus:border-green-500 qtd-in" placeholder="0">
+                </div>
+                <div class="col-span-2 md:col-span-1 flex justify-center pb-2">
+                    <button onclick="document.getElementById('${id}').remove()" class="text-slate-300 hover:text-red-500 transition-colors"><i class="fas fa-times-circle text-lg"></i></button>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function autoUM(input, id) {
+            const val = input.value.toLowerCase();
+            const umField = document.getElementById(`um-${id}`);
+            let found = "Un";
+            for (let key in umMap) {
+                if (val.includes(key.toLowerCase())) { found = umMap[key]; break; }
+            }
+            umField.value = found;
+        }
+
+        function enviarZap() {
+            const resp = document.getElementById('responsavel').value;
+            const loc = document.getElementById('local').value;
+            if(!resp || !loc) { alert("Preencha Responsável e Local!"); return; }
+
+            let msg = `*📋 LEVANTAMENTO DE MATERIAIS*\n`;
+            msg += `*Posto:* ${loc.toUpperCase()}\n`;
+            msg += `*Responsável:* ${resp}\n`;
+            msg += `*Data:* ${new Date().toLocaleDateString()}\n`;
+            msg += `*------------------------------*\n\n`;
+
+            const linhas = document.querySelectorAll('#lista-container > div');
+            let temItem = false;
+
+            linhas.forEach(l => {
+                const mat = l.querySelector('.mat-in').value;
+                const qtd = l.querySelector('.qtd-in').value;
+                const um = l.querySelector('input[readonly]').value;
+                if(mat && qtd > 0) {
+                    msg += `✅ *${mat}*\n   └ Qtd: ${qtd} ${um}\n\n`;
+                    temItem = true;
+                }
+            });
+
+            if(!temItem) { alert("Adicione materiais e quantidades!"); return; }
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+        }
+
+        addLinha();
+    </script>
+</body>
+</html>
